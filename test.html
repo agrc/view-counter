@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>viewcounter test page</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var request = new XMLHttpRequest();
+            var onLoad = function () {
+                if (request.status !== 200) {
+                    return; // don't do anything
+                }
+
+                var count = JSON.parse(request.responseText).count;
+
+                var span = document.createElement('span');
+                span.appendChild(document.createTextNode('This page has been viewed ' + count.toLocaleString() + ' times.'));
+
+                document.body.appendChild(span);
+            };
+
+            request.addEventListener('load', onLoad);
+            request.open('GET', 'http://localhost:8010/utahkoopserver/us-central1/viewcounter');
+            request.send();
+        </script>
+    </body>
+</html>
