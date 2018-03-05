@@ -5,24 +5,40 @@
         <title>viewcounter test page</title>
     </head>
     <body>
+        <h4>Local (<span id="local_url"></span>)</h4>
+        <span id="local_results"></span>
+
+        <h4>Production (<span id="production_url"></span>)</h4>
+        <span id="production_results"></span>
+
         <script type="text/javascript">
-            var request = new XMLHttpRequest();
-            var onLoad = function () {
-                if (request.status !== 200) {
-                    return; // don't do anything
-                }
+            var LocalURL = 'http://localhost:8010/utahkoopserver/us-central1/viewcounter';
+            var ProductionURL = 'https://us-central1-utahkoopserver.cloudfunctions.net/viewcounter';
 
-                var count = JSON.parse(request.responseText).count;
+            var makeRequest = function (url, resultsSpan, urlSpan) {
+                var request = new XMLHttpRequest();
+                var startTime = Date.now();
 
-                var span = document.createElement('span');
-                span.appendChild(document.createTextNode('This page has been viewed ' + count.toLocaleString() + ' times.'));
+                var onLoad = function () {
+                    if (request.status !== 200) {
+                        return; // don't do anything
+                    }
 
-                document.body.appendChild(span);
+                    var count = JSON.parse(request.responseText).count;
+
+                    resultsSpan.innerHTML = 'This page has been viewed ' + count.toLocaleString() +
+                        ' times (' + (Date.now() - startTime) + 'ms).';
+                };
+
+                request.addEventListener('load', onLoad);
+                request.open('GET', url);
+                request.send();
+
+                urlSpan.innerHTML = url;
             };
 
-            request.addEventListener('load', onLoad);
-            request.open('GET', 'http://localhost:8010/utahkoopserver/us-central1/viewcounter');
-            request.send();
+            makeRequest(LocalURL, document.getElementById('local_results'), document.getElementById('local_url'));
+            makeRequest(ProductionURL, document.getElementById('production_results'), document.getElementById('production_url'));
         </script>
     </body>
 </html>
