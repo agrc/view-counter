@@ -12,6 +12,12 @@ exports.viewcounter = (request, response) => {
     const referrer = request.get('referrer');
     console.log('referrer', referrer);
 
+    if (!referrer) {
+        response.status(400).json({
+            message: 'referrer is undefined!'
+        });
+    }
+
     const key = datastore.key([VIEW_KIND, referrer]);
 
     datastore.get(key, (err, entity) => {
