@@ -1,6 +1,8 @@
 const Datastore = require('@google-cloud/datastore');
 
 const VIEW_KIND = 'view';
+const BAD_REQUEST = 400;
+const SERVER_ERROR = 500;
 
 const datastore = new Datastore({ projectId: 'utahkoopserver' });
 
@@ -13,7 +15,7 @@ exports.viewcounter = (request, response) => {
     console.log('referrer', referrer);
 
     if (!referrer) {
-        response.status(400).json({
+        response.status(BAD_REQUEST).json({
             message: 'referrer is undefined!'
         });
     }
@@ -29,7 +31,7 @@ exports.viewcounter = (request, response) => {
                 data: { count: entity.count }
             }, (error) => {
                 if (error) {
-                    response.status(500).json({
+                    response.status(SERVER_ERROR).json({
                         message: 'error updating record',
                         error
                     });
@@ -45,7 +47,7 @@ exports.viewcounter = (request, response) => {
                 data
             }, (error) => {
                 if (error) {
-                    response.status(500).json({
+                    response.status(SERVER_ERROR).json({
                         message: 'error creating record',
                         error
                     });
