@@ -1,18 +1,14 @@
-const app = require('express')();
 const Datastore = require('@google-cloud/datastore');
 
 const VIEW_KIND = 'view';
 
 const datastore = new Datastore({ projectId: 'utahkoopserver' });
 
-// enable CORS headers
-app.use((request, response, next) => {
+exports.viewcounter = (request, response) => {
+    // CORS headers
     response.set('Access-Control-Allow-Origin', '*');
     response.set('Access-Control-Allow-Methods', 'GET');
-    next();
-});
 
-app.get('/', (request, response) => {
     const referrer = request.get('referrer');
     console.log('referrer', referrer);
 
@@ -54,6 +50,4 @@ app.get('/', (request, response) => {
             });
         }
     });
-});
-
-exports.viewcounter = app;
+};
