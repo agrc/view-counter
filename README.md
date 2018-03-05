@@ -10,7 +10,9 @@ One-time setup:
 1. [Install Cloud Datastore Emulator](https://cloud.google.com/datastore/docs/tools/datastore-emulator)
 
 To run locally:
-1. `gcloud beta emulators datastore start --no-legacy` (must be done _before_ starting the functions emulator)
+1. `gcloud beta emulators datastore start --no-legacy`
+1. `(gcloud beta emulators datastore env-init)`
+  - Sets the environment variables (must be done _before_ starting the functions emulator)
 1. `functions-emulator start`
 1. `functions-emulator deploy viewcounter --trigger-http` (you only need to do this once)
 
