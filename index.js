@@ -23,8 +23,8 @@ exports.viewcounter = async (request, response) => {
   if (referrer.indexOf("deploy-preview") > -1) {
     return response.json({ preview: true });
   }
-  if (referrer.indexOf("gis.utah.gov") === -1) {
-    return response.json({ skip: true });
+  if (referrer.indexOf("gis.utah.gov") === -1 && process.env.NODE_ENV === "production" && referrer.indexOf("test.html") === -1) {
+    return response.json({ skip: true, NODE_ENV: `${process.env.NODE_ENV}` });
   }
 
   const key = datastore.key([VIEW_KIND, referrer]);
