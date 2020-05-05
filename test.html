@@ -12,8 +12,8 @@
         <span id="production_results"></span>
 
         <script type="text/javascript">
-            var LocalURL = 'http://localhost:8010/utahkoopserver/us-central1/viewcounter';
-            var ProductionURL = 'https://us-central1-utahkoopserver.cloudfunctions.net/viewcounter';
+            var LocalURL = 'http://localhost:8080/utahkoopserver/us-central1/viewcounter';
+            var ProductionURL = 'https://us-central1-ut-dts-agrc-gis-utah-gov-prod.cloudfunctions.net/viewcounter';
 
             var makeRequest = function (url, resultsSpan, urlSpan) {
                 var request = new XMLHttpRequest();
@@ -21,13 +21,17 @@
 
                 var onLoad = function () {
                     if (request.status !== 200) {
-                        return; // don't do anything
+                        resultsSpan.innerHTML = `Response code: ${request.status}`;
                     }
 
-                    var count = JSON.parse(request.responseText).count;
+                    try {
+                        var count = JSON.parse(request.responseText).count;
 
-                    resultsSpan.innerHTML = 'This page has been viewed ' + count.toLocaleString() +
-                        ' times (' + (Date.now() - startTime) + 'ms).';
+                        resultsSpan.innerHTML = 'This page has been viewed ' + count.toLocaleString() +
+                            ' times (' + (Date.now() - startTime) + 'ms).';
+                    } catch {
+                        resultsSpan.innerHTML = request.responseText;
+                    }
                 };
 
                 request.addEventListener('load', onLoad);
