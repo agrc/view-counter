@@ -12,7 +12,6 @@ exports.viewcounter = async (request, response) => {
   response.set("Access-Control-Allow-Methods", "GET");
 
   const referrer = request.get("referrer");
-  console.log("referrer", referrer);
 
   if (!referrer) {
     response.status(BAD_REQUEST).json({
@@ -29,7 +28,6 @@ exports.viewcounter = async (request, response) => {
 
   const key = datastore.key([VIEW_KIND, referrer]);
   const [entity] = await datastore.get(key);
-  console.log(entity);
 
   if (!entity) {
     const data = { count: 1 };
@@ -50,9 +48,7 @@ exports.viewcounter = async (request, response) => {
     response.json({ count: entity.count });
   }
 
-  console.log(entity.count);
   entity.count++;
-  console.log(entity.count);
 
   try {
     await datastore.save({
