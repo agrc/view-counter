@@ -13,9 +13,10 @@
     "deploy": "gcloud functions deploy viewcounter --trigger-http --memory=128MB --runtime=nodejs10 --allow-unauthenticated"
   },
   "dependencies": {
-    "@google-cloud/datastore": "^5.1.0"
+    "@google-cloud/datastore": "^6.3.1"
   },
   "devDependencies": {
+    "@google-cloud/functions-framework": "^1.7.1",
     "http-server": "^0.12.3"
   }
 }
