@@ -7,7 +7,7 @@
   "author": "Scott Davis <stdavis@utah.gov>",
   "license": "MIT",
   "scripts": {
-    "functions": "functions-framework --target=viewcounter",
+    "functions": "export GOOGLE_APPLICATION_CREDENTIALS=./service-account.json && functions-framework --target=viewcounter",
     "server": "http-server -p 8081 -o /test.html",
     "start": "npm run functions & npm run server",
     "deploy": "gcloud functions deploy viewcounter --trigger-http --memory=128MB --runtime=nodejs10 --allow-unauthenticated"
