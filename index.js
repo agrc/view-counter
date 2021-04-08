@@ -11,22 +11,25 @@ exports.viewcounter = async (request, response) => {
   response.set("Access-Control-Allow-Origin", "*");
   response.set("Access-Control-Allow-Methods", "GET");
 
-  const referrer = request.get("referrer");
+  const href = request.body;
 
-  if (!referrer) {
-    response.status(BAD_REQUEST).json({
-      message: "referrer is undefined!",
+  return response.json({ blah: 'blah' });
+
+  // empty request sends an empty object as the body
+  if (!href || typeof href === 'object' || href.length === 0) {
+    return response.status(BAD_REQUEST).json({
+      message: "href post body data is missing!",
     });
   }
 
-  if (referrer.indexOf("deploy-preview") > -1) {
+  if (href.indexOf("deploy-preview") > -1) {
     return response.json({ preview: true });
   }
-  if (referrer.indexOf("gis.utah.gov") === -1 && process.env.NODE_ENV === "production" && referrer.indexOf("test.html") === -1) {
+  if (href.indexOf("gis.utah.gov") === -1 && process.env.NODE_ENV === "production") {
     return response.json({ skip: true, NODE_ENV: `${process.env.NODE_ENV}` });
   }
 
-  const key = datastore.key([VIEW_KIND, referrer]);
+  const key = datastore.key([VIEW_KIND, href]);
   const [entity] = await datastore.get(key);
 
   if (!entity) {
@@ -45,7 +48,7 @@ exports.viewcounter = async (request, response) => {
 
     console.log("record created successfully");
 
-    response.json({ count: entity.count });
+    return response.json({ count: entity.count });
   }
 
   entity.count++;

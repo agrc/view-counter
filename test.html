@@ -12,37 +12,35 @@
     <span id="production_results"></span>
 
     <script type="text/javascript">
-      var LocalURL =
-        "http://localhost:8080/utahkoopserver/us-central1/viewcounter";
-      var ProductionURL =
+      const LocalURL =
+        "http://localhost:8080/";
+      const ProductionURL =
         "https://us-central1-ut-dts-agrc-gis-utah-gov-prod.cloudfunctions.net/viewcounter";
 
-      var makeRequest = function (url, resultsSpan, urlSpan) {
-        var request = new XMLHttpRequest();
-        var startTime = Date.now();
+      const makeRequest = async function (url, resultsSpan, urlSpan) {
+        const startTime = Date.now();
 
-        var onLoad = function () {
-          if (request.status !== 200) {
-            resultsSpan.innerHTML = `Response code: ${request.status}`;
+        const response = await fetch(url, {
+          method: "POST",
+          body: location.href,
+        });
+        if (response.status !== 200) {
+          resultsSpan.innerHTML = `Response code: ${response.status}`;
+        }
+
+        try {
+          const responseJson = await response.json();
+
+          if (responseJson.count) {
+            resultsSpan.innerHTML = `This page has been viewed ${responseJson.count.toLocaleString()} times (${
+              Date.now() - startTime
+            }ms).`;
+          } else {
+            resultsSpan.innerHTML = JSON.stringify(responseJson);
           }
-
-          try {
-            var count = JSON.parse(request.responseText).count;
-
-            resultsSpan.innerHTML =
-              "This page has been viewed " +
-              count.toLocaleString() +
-              " times (" +
-              (Date.now() - startTime) +
-              "ms).";
-          } catch {
-            resultsSpan.innerHTML = request.responseText;
-          }
-        };
-
-        request.addEventListener("load", onLoad);
-        request.open("GET", url);
-        request.send();
+        } catch {
+          resultsSpan.innerHTML = response;
+        }
 
         urlSpan.innerHTML = url;
       };
