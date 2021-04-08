@@ -13,8 +13,6 @@ exports.viewcounter = async (request, response) => {
 
   const href = request.body;
 
-  return response.json({ blah: 'blah' });
-
   // empty request sends an empty object as the body
   if (!href || typeof href === 'object' || href.length === 0) {
     return response.status(BAD_REQUEST).json({
