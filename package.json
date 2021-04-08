@@ -9,18 +9,13 @@
   "scripts": {
     "functions": "functions-framework --target=viewcounter",
     "server": "http-server -p 8081 -o /test.html",
-    "start": "npm-watch & npm run server",
+    "start": "npm run functions & npm run server",
     "deploy": "gcloud functions deploy viewcounter --trigger-http --memory=128MB --runtime=nodejs10 --allow-unauthenticated"
-  },
-  "watch": {
-    "functions": "index.js"
   },
   "dependencies": {
     "@google-cloud/datastore": "^5.1.0"
   },
   "devDependencies": {
-    "@google-cloud/functions-framework": "1.5.1",
-    "http-server": "0.12.3",
-    "npm-watch": "0.6.0"
+    "http-server": "^0.12.3"
   }
 }
