@@ -9,6 +9,7 @@ One-time setup:
 1. [Install `gcloud` cli](https://cloud.google.com/functions/docs/quickstart)
 1. [Install Cloud Functions Local Emulator](https://cloud.google.com/functions/docs/emulator)
 1. [Install Cloud Datastore Emulator](https://cloud.google.com/datastore/docs/tools/datastore-emulator)
+1. Add a service account key file named: `<project-root>/service-account.json`
 
 To run locally:
 
