@@ -46,7 +46,7 @@ exports.viewcounter = async (request, response) => {
 
     console.log("record created successfully");
 
-    return response.json({ count: entity.count });
+    return response.json(data);
   }
 
   entity.count++;
