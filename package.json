@@ -10,13 +10,13 @@
     "functions": "export GOOGLE_APPLICATION_CREDENTIALS=./service-account.json && functions-framework --target=viewcounter",
     "server": "http-server -p 8081 -o /test.html",
     "start": "npm run functions & npm run server",
-    "deploy": "gcloud functions deploy viewcounter --trigger-http --memory=128MB --runtime=nodejs14 --allow-unauthenticated"
+    "deploy": "gcloud functions deploy viewcounter --trigger-http --memory=128MB --runtime=nodejs18 --allow-unauthenticated"
   },
   "dependencies": {
-    "@google-cloud/datastore": "^6.3.1"
+    "@google-cloud/datastore": "^7.0.0"
   },
   "devDependencies": {
-    "@google-cloud/functions-framework": "^1.7.1",
-    "http-server": "^0.12.3"
+    "@google-cloud/functions-framework": "^3.1.2",
+    "http-server": "^14.1.1"
   }
 }
