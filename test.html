@@ -22,7 +22,7 @@
 
         const response = await fetch(url, {
           method: "POST",
-          body: location.href,
+          body: `${location.origin}${location.pathname}`
         });
         if (response.status !== 200) {
           resultsSpan.innerHTML = `Response code: ${response.status}`;
