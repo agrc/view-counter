@@ -17,6 +17,6 @@
   },
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.7.1",
-    "http-server": "^0.12.3"
+    "http-server": "^14.1.1"
   }
 }
