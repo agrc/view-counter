@@ -1,29 +1,29 @@
-const { Datastore } = require("@google-cloud/datastore");
+import { Datastore } from '@google-cloud/datastore';
 
-const VIEW_KIND = "view";
+const VIEW_KIND = 'view';
 const BAD_REQUEST = 400;
 const SERVER_ERROR = 500;
 
 const datastore = new Datastore();
 
-exports.viewcounter = async (request, response) => {
+export async function viewcounter(request, response) {
   // CORS headers
-  response.set("Access-Control-Allow-Origin", "*");
-  response.set("Access-Control-Allow-Methods", "GET");
+  response.set('Access-Control-Allow-Origin', '*');
+  response.set('Access-Control-Allow-Methods', 'GET');
 
   const href = request.body;
 
   // empty request sends an empty object as the body
   if (!href || typeof href === 'object' || href.length === 0) {
     return response.status(BAD_REQUEST).json({
-      message: "href post body data is missing!",
+      message: 'href post body data is missing!',
     });
   }
 
-  if (href.indexOf("deploy-preview") > -1) {
+  if (href.indexOf('deploy-preview') > -1) {
     return response.json({ preview: true });
   }
-  if (href.indexOf("gis.utah.gov") === -1 && process.env.NODE_ENV === "production") {
+  if (href.indexOf('gis.utah.gov') === -1 && process.env.NODE_ENV === 'production') {
     return response.json({ skip: true, NODE_ENV: `${process.env.NODE_ENV}` });
   }
 
@@ -39,12 +39,12 @@ exports.viewcounter = async (request, response) => {
       });
     } catch (error) {
       return response.status(SERVER_ERROR).json({
-        message: "error creating record",
-        error: error || "",
+        message: 'error creating record',
+        error: error || '',
       });
     }
 
-    console.log("record created successfully");
+    console.log('record created successfully');
 
     return response.json(data);
   }
@@ -58,12 +58,12 @@ exports.viewcounter = async (request, response) => {
     });
   } catch (error) {
     return response.status(SERVER_ERROR).json({
-      message: "error updating record",
-      error: error || "",
+      message: 'error updating record',
+      error: error || '',
     });
   }
 
-  console.log("record updated successfully");
+  console.log('record updated successfully');
 
   return response.json({ count: entity.count });
 };

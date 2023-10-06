@@ -2,21 +2,55 @@
   "name": "viewcounter",
   "version": "1.1.0",
   "description": "Google Cloud Functions for tracking and displaying page view counts",
-  "main": "index.js",
   "repository": "https://github.com/agrc/view-counter",
-  "author": "Scott Davis <stdavis@utah.gov>",
   "license": "MIT",
+  "author": "Scott Davis <stdavis@utah.gov>",
+  "type": "module",
+  "main": "index.js",
   "scripts": {
+    "deploy": "gcloud functions deploy viewcounter --trigger-http --memory=128MB --runtime=nodejs18 --allow-unauthenticated",
+    "format": "prettier . --write",
     "functions": "export GOOGLE_APPLICATION_CREDENTIALS=./service-account.json && functions-framework --target=viewcounter",
+    "lint": "eslint .",
     "server": "http-server -p 8081 -o /test.html",
-    "start": "npm run functions & npm run server",
-    "deploy": "gcloud functions deploy viewcounter --trigger-http --memory=128MB --runtime=nodejs18 --allow-unauthenticated"
+    "start": "npm run functions & npm run server"
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-organize-imports",
+      "prettier-plugin-packagejson"
+    ],
+    "printWidth": 120,
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "env": {
+      "es2022": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": [
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ]
   },
   "dependencies": {
-    "@google-cloud/datastore": "^8.2.1"
+    "@google-cloud/datastore": "^8.2.1",
+    "eslint": "^8.51.0"
   },
   "devDependencies": {
     "@google-cloud/functions-framework": "^3.3.0",
-    "http-server": "^14.1.1"
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "http-server": "^14.1.1",
+    "prettier": "^3.0.3",
+    "prettier-plugin-organize-imports": "^3.2.3",
+    "prettier-plugin-packagejson": "^2.4.6"
   }
 }
