@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -12,17 +12,15 @@
     <span id="production_results"></span>
 
     <script type="text/javascript">
-      const LocalURL =
-        "http://localhost:8080/";
-      const ProductionURL =
-        "https://us-central1-ut-dts-agrc-gis-utah-gov-prod.cloudfunctions.net/viewcounter";
+      const LocalURL = 'http://localhost:8080/';
+      const ProductionURL = 'https://us-central1-ut-dts-agrc-gis-utah-gov-prod.cloudfunctions.net/viewcounter';
 
       const makeRequest = async function (url, resultsSpan, urlSpan) {
         const startTime = Date.now();
 
         const response = await fetch(url, {
-          method: "POST",
-          body: `${location.origin}${location.pathname}`
+          method: 'POST',
+          body: `${location.origin}${location.pathname}`,
         });
         if (response.status !== 200) {
           resultsSpan.innerHTML = `Response code: ${response.status}`;
@@ -45,15 +43,11 @@
         urlSpan.innerHTML = url;
       };
 
-      makeRequest(
-        LocalURL,
-        document.getElementById("local_results"),
-        document.getElementById("local_url")
-      );
+      makeRequest(LocalURL, document.getElementById('local_results'), document.getElementById('local_url'));
       makeRequest(
         ProductionURL,
-        document.getElementById("production_results"),
-        document.getElementById("production_url")
+        document.getElementById('production_results'),
+        document.getElementById('production_url'),
       );
     </script>
   </body>
