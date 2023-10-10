@@ -44,5 +44,19 @@ jobs:
     if: github.ref_name == 'main' && needs.release-please.outputs.release_created
 
     steps:
+      - name: ⬇️ Set up code
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: ⎔ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: 📥 Download dependencies
+        run: npm ci
+
       - name: 🚀 Deploy
         run: npm run deploy
