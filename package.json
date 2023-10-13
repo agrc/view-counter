@@ -1,6 +1,6 @@
 {
   "name": "viewcounter",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Google Cloud Functions for tracking and displaying page view counts",
   "repository": "https://github.com/agrc/view-counter",
   "license": "MIT",

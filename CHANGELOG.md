@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/agrc/view-counter/compare/v1.2.0...v1.2.1) (2023-10-13)
+
+
+### 🌲 Dependencies
+
+* **dev:** bump the safe-dependencies group with 1 update ([083b007](https://github.com/agrc/view-counter/commit/083b0079a26240ede30865cfbe7baa7c0d04c42f))
+
 ## [1.2.0](https://github.com/agrc/view-counter/compare/v1.1.0...v1.2.0) (2023-10-10)
 
 
