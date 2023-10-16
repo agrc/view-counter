@@ -58,5 +58,12 @@ jobs:
       - name: 📥 Download dependencies
         run: npm ci
 
+      - name: 🗝️ Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          access_token_scopes: 'email, openid, https://www.googleapis.com/auth/cloud-platform, https://www.googleapis.com/auth/firebase'
+          workload_identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+
       - name: 🚀 Deploy
         run: npm run deploy
